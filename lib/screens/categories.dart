@@ -16,6 +16,7 @@ class Categories extends StatelessWidget {
           title: Text('App Meals Flutter'),
         ),
         body: GridView(
+          padding: const EdgeInsets.all(25),
           children: DUMMY_CATEGORIES
               .map((el) => CategoryItem(
                   title: el.title,
