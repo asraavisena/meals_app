@@ -20,8 +20,8 @@ class Categories extends StatelessWidget {
           children: DUMMY_CATEGORIES
               .map((el) => CategoryItem(
                   title: el.title,
-                  color:
-                      el.color)) // ! KALAU ADA KAYA OBJECT JANGAN LUPA KEY:PROP
+                  color: el.color,
+                  id: el.id)) // ! KALAU ADA KAYA OBJECT JANGAN LUPA KEY:PROP
               .toList(),
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200,
