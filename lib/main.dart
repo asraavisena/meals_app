@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './screens/categories.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,31 +15,31 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Meals'),
+      home: const Categories(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+// class MyHomePage extends StatefulWidget {
+//   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
-  final String title;
+//   final String title;
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+//   @override
+//   State<MyHomePage> createState() => _MyHomePageState();
+// }
 
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-          child: const Text(
-        'You have pushed the button this many times:',
-      )), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
+// class _MyHomePageState extends State<MyHomePage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(widget.title),
+//       ),
+//       body: const Center(
+//           child: Text(
+//         'You have pushed the button this many times:',
+//       )), // This trailing comma makes auto-formatting nicer for build methods.
+//     );
+//   }
+// }
