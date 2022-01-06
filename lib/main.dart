@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './dummy_data.dart';
+import './models/meal.dart';
 import './screens/filters.dart';
 import './screens/tabs.dart';
 import './screens/meal_details.dart';
@@ -9,11 +11,51 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Map<String, bool> _filters = {
+    'gluten': false,
+    'lactose': false,
+    'vegan': false,
+    'vegetarian': false
+  };
+
+  List<Meal> _availableMeal = DUMMY_MEALS;
+
+  void _setFilters(Map<String, bool> filteredData) {
+    setState(() {
+      _filters = filteredData;
+      _availableMeal = DUMMY_MEALS.where((el) {
+        if (_filters['gluten']! && !el.isGlutenFree) {
+          return false;
+        }
+        if (_filters['lactose']! && !el.isLactoseFree) {
+          return false;
+        }
+
+        if (_filters['vegan']! && !el.isVegan) {
+          return false;
+        }
+
+        if (_filters['vegetarian']! && !el.isVegetarian) {
+          return false;
+        }
+
+        return true;
+      }).toList();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(_filters);
+
     return MaterialApp(
       title: 'Flutter Meals',
       theme: ThemeData(
@@ -35,9 +77,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (ctx) => const Tabs(),
-        CategoryMeals.routeName: (ctx) => CategoryMeals(),
+        CategoryMeals.routeName: (ctx) =>
+            CategoryMeals(availableMeals: _availableMeal),
         MealDetails.routeName: (ctx) => const MealDetails(),
-        Filters.routeName: (ctx) => const Filters()
+        Filters.routeName: (ctx) =>
+            Filters(currentFilters: _filters, saveFilters: _setFilters)
       },
       // ! GO TO THE DEFINED ROUTES IN ONGENERATEROUTE WHEN ROUTES IS NOT DEFINED IN ROUTES
       onGenerateRoute: (settings) {
