@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import '../models/meal.dart';
 import '../widgets/main_drawer.dart';
 import './favorites.dart';
 import './categories.dart';
 
 class Tabs extends StatefulWidget {
-  const Tabs({Key? key}) : super(key: key);
+  final List<Meal> favouriteMeal;
+  const Tabs({Key? key, required this.favouriteMeal}) : super(key: key);
 
   @override
   _TabsState createState() => _TabsState();
@@ -12,10 +14,19 @@ class Tabs extends StatefulWidget {
 
 class _TabsState extends State<Tabs> {
   int _selectedIndex = 0;
-  final List<Map<String, Object>> _pages = [
-    {'pages': const Categories(), 'title': 'Categories'},
-    {'pages': const Favourites(), 'title': 'Favourites'}
-  ];
+  List<Map<String, Object>>? _pages;
+
+  @override
+  void initState() {
+    _pages = [
+      {'pages': const Categories(), 'title': 'Categories'},
+      {
+        'pages': Favourites(favouriteMeal: widget.favouriteMeal),
+        'title': 'Favourites'
+      }
+    ];
+    super.initState();
+  }
 
   void _selectPage(int index) {
     setState(() {
@@ -27,7 +38,7 @@ class _TabsState extends State<Tabs> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text((_pages[_selectedIndex]['title'] as String)),
+        title: Text((_pages![_selectedIndex]['title'] as String)),
         // bottom: TabBar(tabs: <Widget>[
         //   Tab(
         //     icon: Icon(Icons.category),
@@ -40,7 +51,7 @@ class _TabsState extends State<Tabs> {
         // ]),
       ),
       drawer: const MainDrawer(),
-      body: (_pages[_selectedIndex]['pages'] as Widget),
+      body: (_pages![_selectedIndex]['pages'] as Widget),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
         backgroundColor: Theme.of(context).primaryColor,
