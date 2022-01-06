@@ -19,7 +19,7 @@ class Categories extends StatelessWidget {
               color: el.color,
               id: el.id)) // ! KALAU ADA KAYA OBJECT JANGAN LUPA KEY:PROP
           .toList(),
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,
           childAspectRatio:
               3 / 2, // ! FOR 200 WIDTH I WANT TO HAVE 300 HEIGHT IN THE END

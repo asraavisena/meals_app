@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/widgets/meal_item.dart';
+import '../models/meal.dart';
+import '../widgets/meal_item.dart';
 
 import '../dummy_data.dart';
 
-class CategoryMeals extends StatelessWidget {
+class CategoryMeals extends StatefulWidget {
   static const routeName = '/category-meals';
   // ! LEAVE FOR REFERENCE
   // final String categoryId;
@@ -11,17 +12,45 @@ class CategoryMeals extends StatelessWidget {
   // const CategoryMeals(
   //     {Key? key, required this.categoryId, required this.categoryTitle})
   //     : super(key: key);
+  const CategoryMeals({Key? key}) : super(key: key);
+
+  @override
+  State<CategoryMeals> createState() => _CategoryMealsState();
+}
+
+class _CategoryMealsState extends State<CategoryMeals> {
+  String? categoryTitle;
+  List<Meal>? displayMeals;
+  var _loadedInitDate = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_loadedInitDate == false) {
+      final routeArgs =
+          ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+      categoryTitle = routeArgs['title'];
+      final categoryId = routeArgs['id'];
+      displayMeals = DUMMY_MEALS.where((meal) {
+        return meal.categories.contains(categoryId);
+      }).toList();
+      _loadedInitDate = true;
+    }
+    super.didChangeDependencies();
+  }
+
+  void _removeMeal(String mealId) {
+    setState(() {
+      displayMeals?.removeWhere((element) => element.id == mealId);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final routeArgs =
-        ModalRoute.of(context)?.settings.arguments as Map<String, String>;
-    final categoryTitle = routeArgs['title'];
-    final categoryId = routeArgs['id'];
-    final categoryMeals = DUMMY_MEALS.where((meal) {
-      return meal.categories.contains(categoryId);
-    }).toList();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(categoryTitle as String),
@@ -29,14 +58,16 @@ class CategoryMeals extends StatelessWidget {
       body: ListView.builder(
         itemBuilder: (ctx, index) {
           return MealItem(
-              title: categoryMeals[index].title,
-              imageUrl: categoryMeals[index].imageUrl,
-              affordability: categoryMeals[index].affordability,
-              complexity: categoryMeals[index].complexity,
-              duration: categoryMeals[index].duration,
-              id: categoryMeals[index].id);
+            title: displayMeals![index].title,
+            imageUrl: displayMeals![index].imageUrl,
+            affordability: displayMeals![index].affordability,
+            complexity: displayMeals![index].complexity,
+            duration: displayMeals![index].duration,
+            id: displayMeals![index].id,
+            removeItem: _removeMeal,
+          );
         },
-        itemCount: categoryMeals.length,
+        itemCount: displayMeals?.length,
       ),
     );
   }

@@ -13,8 +13,8 @@ class Tabs extends StatefulWidget {
 class _TabsState extends State<Tabs> {
   int _selectedIndex = 0;
   final List<Map<String, Object>> _pages = [
-    {'pages': Categories(), 'title': 'Categories'},
-    {'pages': Favourites(), 'title': 'Favourites'}
+    {'pages': const Categories(), 'title': 'Categories'},
+    {'pages': const Favourites(), 'title': 'Favourites'}
   ];
 
   void _selectPage(int index) {
@@ -39,7 +39,7 @@ class _TabsState extends State<Tabs> {
         //   )
         // ]),
       ),
-      drawer: MainDrawer(),
+      drawer: const MainDrawer(),
       body: (_pages[_selectedIndex]['pages'] as Widget),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
@@ -48,12 +48,12 @@ class _TabsState extends State<Tabs> {
         selectedItemColor: Theme.of(context).colorScheme.secondary,
         currentIndex: _selectedIndex,
         // type: BottomNavigationBarType.shifting,
-        items: [
-          const BottomNavigationBarItem(
+        items: const [
+          BottomNavigationBarItem(
               // backgroundColor: Theme.of(context).primaryColor,
               icon: Icon(Icons.category),
               label: 'Categories'),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
               // backgroundColor: Theme.of(context).primaryColor,
               icon: Icon(Icons.star),
               label: 'Favorites')

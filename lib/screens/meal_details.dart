@@ -35,57 +35,66 @@ class MealDetails extends StatelessWidget {
     final mealId = ModalRoute.of(context)?.settings.arguments as String;
     final selectedMeal = DUMMY_MEALS.firstWhere((el) => el.id == mealId);
     return Scaffold(
-        appBar: AppBar(
-          title: Text('${selectedMeal.title}'),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: 300,
-                width: double.infinity,
-                child: Image.network(
-                  selectedMeal.imageUrl,
-                  fit: BoxFit.cover,
-                ),
+      appBar: AppBar(
+        title: Text(selectedMeal.title),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.all(2),
+              height: 300,
+              width: double.infinity,
+              child: Image.network(
+                selectedMeal.imageUrl,
+                fit: BoxFit.cover,
               ),
-              _buildSectionTitle('Ingredients', context),
-              // ! LATER ADD MEDIAQUERY
-              _buildContainer(
-                ListView.builder(
-                  itemBuilder: (ctx, index) {
-                    return Card(
-                      color: Theme.of(context).colorScheme.secondary,
-                      child: Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                          child: Text(selectedMeal.ingredients[index])),
-                    );
-                  },
-                  itemCount: selectedMeal.ingredients.length,
-                ),
+            ),
+            _buildSectionTitle('Ingredients', context),
+            // ! LATER ADD MEDIAQUERY
+            _buildContainer(
+              ListView.builder(
+                itemBuilder: (ctx, index) {
+                  return Card(
+                    color: Theme.of(context).colorScheme.secondary,
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 10),
+                        child: Text(selectedMeal.ingredients[index])),
+                  );
+                },
+                itemCount: selectedMeal.ingredients.length,
               ),
-              _buildSectionTitle('Steps', context),
-              _buildContainer(
-                ListView.builder(
-                  itemBuilder: (ctx, index) {
-                    return Column(
-                      children: [
-                        ListTile(
-                          leading: CircleAvatar(
-                            child: Text('#${index + 1}'),
-                          ),
-                          title: Text(selectedMeal.steps[index]),
+            ),
+            _buildSectionTitle('Steps', context),
+            _buildContainer(
+              ListView.builder(
+                itemBuilder: (ctx, index) {
+                  return Column(
+                    children: [
+                      ListTile(
+                        leading: CircleAvatar(
+                          child: Text('#${index + 1}'),
                         ),
-                        Divider()
-                      ],
-                    );
-                  },
-                  itemCount: selectedMeal.steps.length,
-                ),
+                        title: Text(selectedMeal.steps[index]),
+                      ),
+                      const Divider()
+                    ],
+                  );
+                },
+                itemCount: selectedMeal.steps.length,
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.delete),
+        onPressed: () {
+          // ! ONLY MADE UP SCENARIO
+          Navigator.of(context).pop(mealId);
+        },
+      ),
+    );
   }
 }

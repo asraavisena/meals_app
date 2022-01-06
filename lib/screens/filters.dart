@@ -9,10 +9,10 @@ class Filters extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Filters'),
+        title: const Text('Filters'),
       ),
-      drawer: MainDrawer(),
-      body: Center(
+      drawer: const MainDrawer(),
+      body: const Center(
         child: Text('Filters'),
       ),
     );

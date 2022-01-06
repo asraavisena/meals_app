@@ -34,10 +34,10 @@ class MyApp extends StatelessWidget {
       // ! ROUTES IS SCREEN
       initialRoute: '/',
       routes: {
-        '/': (ctx) => Tabs(),
+        '/': (ctx) => const Tabs(),
         CategoryMeals.routeName: (ctx) => CategoryMeals(),
-        MealDetails.routeName: (ctx) => MealDetails(),
-        Filters.routeName: (ctx) => Filters()
+        MealDetails.routeName: (ctx) => const MealDetails(),
+        Filters.routeName: (ctx) => const Filters()
       },
       // ! GO TO THE DEFINED ROUTES IN ONGENERATEROUTE WHEN ROUTES IS NOT DEFINED IN ROUTES
       onGenerateRoute: (settings) {
